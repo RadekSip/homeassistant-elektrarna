@@ -15,12 +15,36 @@ async def async_setup_entry(
 
     sensors = []
     for price_type in ["current", "next"]:
-        sensors.append(ElektrarnaSensor(coordinator, price_type, "priceEur", "EUR/MWh"))
-        sensors.append(ElektrarnaSensor(coordinator, price_type, "priceCzk", "CZK/MWh"))
-        sensors.append(ElektrarnaSensor(coordinator, price_type, "priceCzkVat", "CZK/MWh"))
-        sensors.append(ElektrarnaSensor(coordinator, price_type, "priceCzkKwh", "CZK/kWh"))
-        sensors.append(ElektrarnaSensor(coordinator, price_type, "exchRateCzkEur", "CZK/EUR"))
-        sensors.append(ElektrarnaSensor(coordinator, price_type, "priceLevel", None))
+        sensors.append(
+            ElektrarnaSensor(
+                coordinator, price_type, "priceEur", "EUR/MWh", "mdi:currency-eur"
+            )
+        )
+        sensors.append(
+            ElektrarnaSensor(
+                coordinator, price_type, "priceCzk", "CZK/MWh", "mdi:currency-czk"
+            )
+        )
+        sensors.append(
+            ElektrarnaSensor(
+                coordinator, price_type, "priceCzkVat", "CZK/MWh", "mdi:currency-czk"
+            )
+        )
+        sensors.append(
+            ElektrarnaSensor(
+                coordinator, price_type, "priceCzkKwh", "CZK/kWh", "mdi:currency-czk"
+            )
+        )
+        sensors.append(
+            ElektrarnaSensor(
+                coordinator, price_type, "exchRateCzkEur", "CZK/EUR", "mdi:currency-exchange",
+            )
+        )
+        sensors.append(
+            ElektrarnaSensor(
+                coordinator, price_type, "priceLevel", None, "mdi:chart-line"
+            )
+        )
 
     async_add_entities(sensors)
 
@@ -28,22 +52,23 @@ async def async_setup_entry(
 class ElektrarnaSensor(CoordinatorEntity, Entity):
     """Representation of a Sensor."""
 
-    def __init__(self, coordinator, price_type, key, unit):
+    def __init__(self, coordinator, price_type, key, unit, icon):
         """Initialize the sensor."""
         super().__init__(coordinator)
         self._price_type = price_type
         self._key = key
         self._unit = unit
+        self._icon = icon
         self._attr_device_info = {
             "identifiers": {(DOMAIN, "elektrarna_api")},
-            "name": "Elektrárna API",
+            "name": "Elektrárna",
             "manufacturer": "HostMania.eu",
         }
 
     @property
     def name(self):
         """Return the name of the sensor."""
-        return f"Elektrárna {self._price_type} {self._key}"
+        return f"Elektrarna-{self._price_type}-{self._key}"
 
     @property
     def state(self):
@@ -56,6 +81,11 @@ class ElektrarnaSensor(CoordinatorEntity, Entity):
     def unit_of_measurement(self):
         """Return the unit of measurement."""
         return self._unit
+
+    @property
+    def icon(self):
+        """Return the icon of the sensor."""
+        return self._icon
 
     @property
     def unique_id(self):

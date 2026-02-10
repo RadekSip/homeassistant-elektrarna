@@ -1,4 +1,4 @@
-# Elektrárna - electricity spot prices for CzechRepublic
+# Elektrárna - electricity spot prices for Czech Republic
 
 English:
 
@@ -24,12 +24,24 @@ Více informací a další možnosti integrace naleznete na domovském webu [ele
 1. Otevřete HACS (pokud ho nemáte nainstalován, je třeba tak udělat podle některého z mnoha návodů na internetu)
 2. Jděte do sekce **Integrace**.
 3. Klikněte na menu (tři tečky) vpravo nahoře a zvolte **Vlastní repozitáře**.
+
 ![Repository](screenshot-repo.png)
+
 4. Vložte URL tohoto repozitáře: `https://github.com/RadekSip/homeassistant-elektrarna`.
 5. Vyberte kategorii **Integrace**.
+
 ![URL](screenshot-url.png)
-6. Klikněte na **Přidat** a poté integraci nainstalujte.
-7. Restartujte Home Assistant.
+
+6. Klikněte na **Přidat**
+7. Jakmile uvidíte, že je již přidána (link s ikonou červené popelnice), můžete dialog zavřít (opakované "Přidat" bude hlásit chybu)
+
+![URL](screenshot-added.png)
+
+8. Nyní můžete vyhledat integraci "Elektrárna" v seznamu a stáhnout (nainstalovat)
+9. **Restartujte Home Assistant.**
+
+![URL](screenshot-find.png)
+
 
 ### Manuální instalace
 1. Stáhněte si tento repozitář.
@@ -42,4 +54,6 @@ Více informací a další možnosti integrace naleznete na domovském webu [ele
 3. Vyhledejte **Elektrárna**.
 4. Potvrďte přidání.
 
-Všechny senzory se objeví pod zařízením **Elektrárna API**.
+Všechny senzory se objeví pod zařízením **Elektrárna**.
+
+![URL](screenshot-sensors.png)
