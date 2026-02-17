@@ -1,15 +1,21 @@
+<p align="center">
+<img src="icon.png" width="150">
+</p>
+
 # Elektrárna - electricity spot prices for Czech Republic
 
-English:
+**English:**
 
 This plugin imports electricity spot prices for the Czech Republic. I don’t expect users from other countries, so the plugin is available only in Czech.
 
-Tato integrace získává aktuální a budoucí ceny elektřiny z API `elektrarna.hostmania.eu` a zpřístupňuje je jako senzory v Home Assistant.
+**Czech:**
+
+Tato integrace získává informace o cenách elektřiny z API `elektrarna.hostmania.eu` a zpřístupňuje je jako senzory v Home Assistant.
 Více informací a další možnosti integrace naleznete na domovském webu [elektrarna.hostmania.eu](https://elektrarna.hostmania.eu)
 
 ## Funkce
 - **Aktuální cena:** Data pro aktuální čtvrthodinu.
-- **Budoucí cena:** Data pro následující čtvrthodinu.
+- **Budoucí cena:** Data pro příští čtvrthodinu.
 - **Senzory:**
   - Cena v EUR/MWh
   - Cena v CZK/MWh
