@@ -14,15 +14,32 @@ Tato integrace získává informace o cenách elektřiny z API `elektrarna.hostm
 Více informací a další možnosti integrace naleznete na domovském webu [elektrarna.hostmania.eu](https://elektrarna.hostmania.eu)
 
 ## Funkce
+Využívá veřejného API Elektrárna dostupného zde: [elektrarna.hostmania.eu/api](https://elektrarna.hostmania.eu/api)
 - **Aktuální cena:** Data pro aktuální čtvrthodinu.
 - **Budoucí cena:** Data pro příští čtvrthodinu.
+- **Nejlevnější intervaly:** Data o nejlevnějších intervalech pro dnešní den (souvislé bloky 1h-8h).
+- **Nejlevnější intervaly 34h:** Data o nejlevnějších intervalech pro dnešek+zítřek (souvislé bloky 1h-8h). Dostupné pouze 15-24hod (po zveřejnění cen do půlnoci)
 - **Senzory:**
   - Cena v EUR/MWh
   - Cena v CZK/MWh
   - Cena v CZK/MWh s DPH
   - Cena v CZK/kWh
-  - Kurz CZK/EUR
+  - Použitý kurz CZK/EUR
   - Cenová hladina (low, medium, high)
+  - Pro nejlevnější intervaly (souvislé časové bloky 1h-8h):
+    - Hodina začátku (startHour)
+    - Minuta začátku (startMinute)
+    - Hodina konce (endHour)
+    - Minuta konce (endMinute)
+    - Průměrná cena v CZK/kWh (averagePriceCzkKwh)
+  - Pro nejlevnější intervaly 34h (souvislé časové bloky 1h-8h):
+    - Hodina začátku (startHour)
+    - Minuta začátku (startMinute)
+    - Hodina konce (endHour)
+    - Minuta konce (endMinute)
+    - Průměrná cena v CZK/kWh (averagePriceCzkKwh)
+    - Začátek zítra (startIsTomorrow)
+    - Konec zítra (endIsTomorrow)
 
 ## Instalace
 

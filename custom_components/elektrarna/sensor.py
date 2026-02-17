@@ -46,6 +46,20 @@ async def async_setup_entry(
             )
         )
 
+    for i in range(1, 9):
+        for key in ["startHour", "startMinute", "endHour", "endMinute", "averagePriceCzkKwh"]:
+            sensors.append(
+                ElektrarnaCheapestIntervalSensor(
+                    coordinator, f"{i}h", key
+                )
+            )
+        for key in ["startHour", "startMinute", "endHour", "endMinute", "averagePriceCzkKwh", "startIsTomorrow", "endIsTomorrow"]:
+            sensors.append(
+                ElektrarnaCheapestInterval34hSensor(
+                    coordinator, f"{i}h", key
+                )
+            )
+
     async_add_entities(sensors)
 
 
@@ -91,3 +105,69 @@ class ElektrarnaSensor(CoordinatorEntity, Entity):
     def unique_id(self):
         """Return a unique ID."""
         return f"elektrarna_{self._price_type}_{self._key}"
+
+
+class ElektrarnaCheapestIntervalSensor(CoordinatorEntity, Entity):
+    """Representation of a Sensor."""
+
+    def __init__(self, coordinator, interval, key):
+        """Initialize the sensor."""
+        super().__init__(coordinator)
+        self._interval = interval
+        self._key = key
+        self._attr_device_info = {
+            "identifiers": {(DOMAIN, "elektrarna_api")},
+            "name": "Elektrárna",
+            "manufacturer": "HostMania.eu",
+        }
+
+    @property
+    def name(self):
+        """Return the name of the sensor."""
+        return f"Elektrarna-cheapest-interval-{self._interval}-{self._key}"
+
+    @property
+    def state(self):
+        """Return the state of the sensor."""
+        if self.coordinator.data and self.coordinator.data.get("cheapest_intervals"):
+            return self.coordinator.data["cheapest_intervals"][self._interval].get(self._key)
+        return None
+
+    @property
+    def unique_id(self):
+        """Return a unique ID."""
+        return f"elektrarna_cheapest_interval_{self._interval}_{self._key}"
+
+
+class ElektrarnaCheapestInterval34hSensor(CoordinatorEntity, Entity):
+    """Representation of a Sensor."""
+
+    def __init__(self, coordinator, interval, key):
+        """Initialize the sensor."""
+        super().__init__(coordinator)
+        self._interval = interval
+        self._key = key
+        self._attr_device_info = {
+            "identifiers": {(DOMAIN, "elektrarna_api")},
+            "name": "Elektrárna",
+            "manufacturer": "HostMania.eu",
+        }
+
+    @property
+    def name(self):
+        """Return the name of the sensor."""
+        return f"Elektrarna-cheapest-interval-34h-{self._interval}-{self._key}"
+
+    @property
+    def state(self):
+        """Return the state of the sensor."""
+        if self.coordinator.data and self.coordinator.data.get("cheapest_intervals_34h"):
+            # Check if the interval exists in the data
+            if self._interval in self.coordinator.data["cheapest_intervals_34h"]:
+                return self.coordinator.data["cheapest_intervals_34h"][self._interval].get(self._key)
+        return None
+
+    @property
+    def unique_id(self):
+        """Return a unique ID."""
+        return f"elektrarna_cheapest_interval_34h_{self._interval}_{self._key}"

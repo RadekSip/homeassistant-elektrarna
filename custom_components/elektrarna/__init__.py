@@ -27,7 +27,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
 
     coordinator = ElektrarnaDataUpdateCoordinator(hass)
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
 
@@ -63,9 +63,22 @@ class ElektrarnaDataUpdateCoordinator(DataUpdateCoordinator):
         """Update data via library."""
         try:
             async with async_timeout.timeout(10):
+                (
+                    current,
+                    next_p,
+                    cheapest,
+                    cheapest_34h,
+                ) = await asyncio.gather(
+                    self.api.get_current_price(),
+                    self.api.get_next_price(),
+                    self.api.get_cheapest_intervals(),
+                    self.api.get_cheapest_intervals_34h(),
+                )
                 return {
-                    "current": await self.api.get_current_price(),
-                    "next": await self.api.get_next_price(),
+                    "current": current,
+                    "next": next_p,
+                    "cheapest_intervals": cheapest,
+                    "cheapest_intervals_34h": cheapest_34h,
                 }
         except Exception as exception:
             raise UpdateFailed(f"Error communicating with API: {exception}")
@@ -84,6 +97,7 @@ class ElektrarnaApi:
         async with session.get(
             "https://elektrarna-api.hostmania.eu/api/v1/currentprice"
         ) as response:
+            response.raise_for_status()
             return await response.json()
 
     async def get_next_price(self):
@@ -92,4 +106,26 @@ class ElektrarnaApi:
         async with session.get(
             "https://elektrarna-api.hostmania.eu/api/v1/nextprice"
         ) as response:
+            response.raise_for_status()
+            return await response.json()
+
+    async def get_cheapest_intervals(self):
+        """Get the cheapest intervals."""
+        session = async_get_clientsession(self._hass)
+        async with session.get(
+            "https://elektrarna-api.hostmania.eu/api/v1/cheapest-intervals/today"
+        ) as response:
+            response.raise_for_status()
+            return await response.json()
+
+    async def get_cheapest_intervals_34h(self):
+        """Get the cheapest intervals for today and tomorrow (10+24 hours)."""
+        session = async_get_clientsession(self._hass)
+        async with session.get(
+            "https://elektrarna-api.hostmania.eu/api/v1/cheapest-intervals/today34h"
+        ) as response:
+            if response.status == 404:
+                _LOGGER.info("No data available for 34h cheapest intervals yet (data for tomorrow are not available)")
+                return {}
+            response.raise_for_status()
             return await response.json()
