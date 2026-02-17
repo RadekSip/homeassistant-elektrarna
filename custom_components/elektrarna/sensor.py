@@ -22,22 +22,22 @@ async def async_setup_entry(
         )
         sensors.append(
             ElektrarnaSensor(
-                coordinator, price_type, "priceCzk", "CZK/MWh", "mdi:currency-czk"
+                coordinator, price_type, "priceCzk", "CZK/MWh", "mdi:cash-100"
             )
         )
         sensors.append(
             ElektrarnaSensor(
-                coordinator, price_type, "priceCzkVat", "CZK/MWh", "mdi:currency-czk"
+                coordinator, price_type, "priceCzkVat", "CZK/MWh", "mdi:cash-100"
             )
         )
         sensors.append(
             ElektrarnaSensor(
-                coordinator, price_type, "priceCzkKwh", "CZK/kWh", "mdi:currency-czk"
+                coordinator, price_type, "priceCzkKwh", "CZK/kWh", "mdi:cash-100"
             )
         )
         sensors.append(
             ElektrarnaSensor(
-                coordinator, price_type, "exchRateCzkEur", "CZK/EUR", "mdi:currency-exchange",
+                coordinator, price_type, "exchRateCzkEur", "CZK/EUR", "mdi:currency-eur",
             )
         )
         sensors.append(
