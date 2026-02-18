@@ -5,8 +5,8 @@
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/RadekSip/homeassistant-elektrarna",
-  "issue_tracker": "https://github.com/RadekSip/homeassistant-elektrarna/issues",
   "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/RadekSip/homeassistant-elektrarna/issues",
   "requirements": [],
   "version": "1.1.0"
 }

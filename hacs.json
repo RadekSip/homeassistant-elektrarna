@@ -1,5 +1,5 @@
 {
   "name": "Elektrárna",
-  "render_readme": true,
-  "country": "CZ"
+  "country": "CZ",
+  "zip_release": false
 }
